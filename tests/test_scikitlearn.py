@@ -7,9 +7,6 @@ from sklearn import datasets
 from sklearn.cross_validation import train_test_split
 
 # Demonstrate K-neighbor classification(K近邻算法) ML:
-#  https://blog.csdn.net/suipingsp/article/details/41964713
-#  https://blog.csdn.net/u011067360/article/details/23941577
-#
 from sklearn.neighbors import KNeighborsClassifier
 
 class TestSciKit(TestCase):
