@@ -34,13 +34,17 @@ class TestSciKit(TestCase):
         knn = KNeighborsClassifier(n_neighbors=5)
         knn.fit(train_X, train_y)    # Training!!!
 
-        score = knn.predict(test_X)  # predict
-        print("\n" + str(score))
+        # Score
+        print(">> Score: " + str(knn.score(test_X, test_y)) )
+
+        # predict
+        pred = knn.predict(test_X)
+        print("\n" + str(pred))
         print(test_y)
 
-        # test: compare score output and actual result.
-        ratio = fuzz.partial_ratio(score, test_y)
-        print("Ratio: " + str(ratio))
+        # Compare: compare predict output and actual result.
+        ratio = fuzz.partial_ratio(pred, test_y)
+        print(">> Ratio: " + str(ratio) )
         assert(ratio >= 95)
 
     def test_linear_regression(self):
@@ -65,7 +69,12 @@ class TestSciKit(TestCase):
         test_y = target_y[-5:]
 
         model = LinearRegression()
+        # print(model.get_params())
+
         model.fit(train_X, train_y)      # training
+
+        score = model.score(test_X, test_y)   # 为训练结果打分。LinearRegerssion score 使用的方法叫: R^2 Coefficient of determination
+        print(">> Training score: " + str(score) )
 
         # coefficient: 决定系数. 对于简单线性回归而言，决定系数为样本"相关系数(Correlation)"的平方. 相关系数显示两个随机变量之间线性关系的强度和方向
         # coefficient 的值的计算过程：
@@ -76,14 +85,14 @@ class TestSciKit(TestCase):
         #   5) 1 减去 SS_res/SS_tot 就得到决定系数
         #   6) 决定系数的开方可以得到样本的"相关系数(Correlation)"
         #   参考：https://zh.wikipedia.org/wiki/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0
-        print(model.coef_)
+        print(">> Coefficient: " + str(model.coef_) )
 
         # Intercept: 截距是在 x=0 的时候求得的y值，它的含义是去除输入后的预测模型。可以理解为是一元回归中任何一个有意义的预测值的起点。
-        print(model.intercept_)
+        print(">> Intercept: " + str(model.intercept_) )
 
         score = model.predict(test_X)    # predict with test data
-        print("\n" + str(score))
-        print(test_y)
+        print(">> Predict value: " + str(score))
+        print(">> Actual value: " + str(test_y) )
 
     def test_mock_data(self):
         '''
